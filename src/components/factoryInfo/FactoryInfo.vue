@@ -28,6 +28,7 @@
     	 	title="导入数据"
     	 	@click.native="handleUpload(scope.$index, scope.row)"
     	 	slot="reference"
+        :disabled="uploadBtn"
     	 	circle></el-button>
     	 <el-button
     	    size="mini"
@@ -35,6 +36,7 @@
     	    icon="el-icon-download"
     	    title="导出数据"
     	    @click.native="exportTable(scope.$index, scope.row)"
+          :disabled="exportBtn"
     	    circle></el-button>
       </template>
     </el-table-column>
@@ -107,6 +109,8 @@ export default {
       },
       dialogFormVisible: false,
       formLabelWidth: "120px",
+      uploadBtn: false,
+      exportBtn: false,
       // 上传文件所需的参数
       upload: {
       	CurrentfactoryId: ""
@@ -354,6 +358,13 @@ export default {
         }).then(() => {
           this.$message.info('该过程耗时较长，请耐心等待');
           this.importTable();
+          this.uploadBtn = true;
+          this.exportBtn = true;
+          var that = this;
+          setTimeout(function(){
+            that.uploadBtn = false;
+            that.exportBtn = false;
+          },5000);
         }).catch(() => {
           this.$message({
             type: 'info',
@@ -396,8 +407,14 @@ export default {
     exportTable(index, row) {
       let factoryId = row.factoryId;
       this.$message.info('导出表格需要一定时间，请耐心等待');
-      api
-        .reportDevice((err, res) => {
+      this.uploadBtn = true;
+      this.exportBtn = true;
+      var that = this;
+      setTimeout(function(){
+        that.uploadBtn = false;
+        that.exportBtn = false;
+      },5000);
+      api.reportDevice((err, res) => {
           if (err) {
             if ( err.response.status === 403 && err.response.data.code==-2) {
               this.$message.error("请登录");
