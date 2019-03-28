@@ -54,7 +54,7 @@ export default {
           let password = this.ruleForm.password;
           api.login((err, res) => {
             if (err || res.status !== 200) {
-              this.$message.error("出错了，刷新一下吧");
+              this.$message.error(res.data.msg);
               return;
             }
             if (res.data.code == 403) {
@@ -66,7 +66,7 @@ export default {
               session.set('roleId',res.data.data.userInfo.roleId);
               this.$router.push({name: 'factory'});
             } else {
-              this.$message.error("出错了，刷新一下吧");
+              this.$message.error(res.data.msg);
             }
           },username,password)
         } else {
