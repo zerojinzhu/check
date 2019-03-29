@@ -426,7 +426,7 @@ export default {
             session.clear();
             this.$router.push({ path: "/login" });
           } else if ( err.response.status === 500) {
-            this.$message.error(res.data.msg);
+            this.$message.error(err.response.data.msg);
             // this.$message.error("系统出错，请稍后再试");
           } else if (err.response.status == 403) {
             this.$message.error("该账号没有此操作权限");
@@ -438,7 +438,7 @@ export default {
           this.$message("修改成功");
           this.dialog.show = false;
         } else {
-          this.$message.error("出错了，刷新一下吧");
+          this.$message.error(res.data.msg);
         }
       }, data);
     },
@@ -554,7 +554,7 @@ export default {
                   session.clear();
                   this.$router.push({ path: "/login" });
                 } else if ( err.response.status === 500) {
-                  this.$message.error(res.data.msg);
+                  this.$message.error(err.response.data.msg);
                   // this.$message.error("系统出错，请稍后再试");
                 } else if (err.response.status == 403) {
                   this.$message.error("该账号没有此操作权限");
@@ -568,7 +568,7 @@ export default {
                 this.$message("修改成功");
                 this.dialog.show = false;
               } else {
-                this.$message.error("出错了，刷新一下吧");
+                this.$message.error(res.data.msg);
               }
             }, data);
           } else {

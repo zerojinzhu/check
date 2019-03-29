@@ -26,7 +26,7 @@ function updateDevice(fn, data) {
     .then(function (res) {
       fn(false, res);
     }).catch(function (err) {
-      fn(err, res);
+      fn(err);
     });
 }
 // 删除电厂设备检修信息(删除表中一行)
